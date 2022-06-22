@@ -1,5 +1,6 @@
 package com.example.zaycevnettask2;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -21,13 +22,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         sharedPreferences = getSharedPreferences(START_COUNTER, Activity.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         count = sharedPreferences.getInt("count", count);
         count++;
         editor.putInt("count", count);
         editor.commit();
-        String line = String.format("Приложение запущено %d раз(а)", sharedPreferences.getInt("count", -1));
+        String line = String.format(getString(R.string.result_value)
+                , sharedPreferences.getInt("count", -1));
         if (sharedPreferences.getInt("count", -1) >= 3) {
             Toast.makeText(this, line,
                     Toast.LENGTH_SHORT).show();
